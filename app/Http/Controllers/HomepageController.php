@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\homepage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use File;
+use Image;
 
 class HomepageController extends Controller
 {
@@ -12,8 +16,10 @@ class HomepageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-            return view('admin/homepage/index');
+    {       $data = homepage::latest()->paginate(1);
+            return view('admin/homepage/index',compact('data'));
+            
+        
     }
 
     /**
@@ -23,7 +29,7 @@ class HomepageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin/homepage/create');
     }
 
     /**
@@ -35,6 +41,20 @@ class HomepageController extends Controller
     public function store(Request $request)
     {
         //
+       //dd($request);
+        $page = new homepage();
+        $page->header = request('text');
+        if($request->hasFile('image')){
+            $filename = Str::random(11).'.'.$request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path().'/admin/images/',$filename);
+            Image::make(public_path().'/admin/images/'.$filename);
+            $page->image = $filename ;
+        }else{
+            $page->image = 'NOPIC.JPG';
+        }
+        $page->save();
+        return redirect()->route('homepage')
+                        ->with('success','สร้างสินค้าสำเร็จแล้ว');
     }
 
     /**
@@ -54,9 +74,10 @@ class HomepageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+     public function edit($id)
+    {   
+        $homepage = homepage::find($id);
+        return view('admin/homepage/edit',compact('homepage'));
     }
 
     /**
@@ -68,7 +89,24 @@ class HomepageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->hasFile('image')){
+            $homepage = homepage::find($id);
+            if($homepage->image != 'NOPIC.JPG'){
+                File::delete(public_path().'admin/images'.$homepage->image);
+            }
+            $filename = Str::random(11).'.'.$request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path().'/admin/images/',$filename);
+            Image::make(public_path().'/admin/images/'.$filename);
+            $homepage->image = $filename ;
+            $homepage-> header = $request->name;
+        }else{
+            $homepage = homepage::find($id);
+            $homepage -> header = $request->name;
+        }
+
+        $homepage->save();
+        return redirect()->route('homepage') 
+                            ->with('success','แก้ไขสำเร็จเเล้ว');
     }
 
     /**
@@ -77,8 +115,11 @@ class HomepageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_homepages)
     {
-        //
+        
+        homepage::destroy($id_homepages);
+        return Redirect()->route('homepage')
+                        ->with('success','ลบสินค้าสำเร็จเเล้ว');
     }
 }

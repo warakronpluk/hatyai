@@ -14,10 +14,10 @@ class CreateHomepagesTable extends Migration
     public function up()
     {
         Schema::create('homepages', function (Blueprint $table) {
-            $table->bigIncrements('id_homepages');
-            $table->integer('id_product');
-            $table->integer('id_mg');
-            $table->integer('id_admin');
+            $table->id();
+            $table->string('header');
+            $table->string('image');
+            $table->timestamps();
         });
     }
 
