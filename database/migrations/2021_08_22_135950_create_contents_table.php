@@ -14,12 +14,12 @@ class CreateContentsTable extends Migration
     public function up()
     {
         Schema::create('contents', function (Blueprint $table) {
-            $table->bigIncrements('id_contents');
+            $table->increments('id_contents');
+             $table->string('head');
             $table->string('text');
             $table->string('image');
-            $table->decimal('price',8,2);
-            $table->string('status');
             $table->integer('id_admin');
+            $table->timestamps();
         });
     }
 

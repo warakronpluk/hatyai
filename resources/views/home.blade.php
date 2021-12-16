@@ -19,9 +19,15 @@
                         <p><strong>Name:</strong> {{Auth::user()->name}}</p>
                         <p><strong>Email:</strong> {{Auth::user()->email}}</p>
                         <p><strong>Phone:</strong> {{Auth::user()->phone}}</p>  
-                        <p><strong>address:</strong> {{Auth::user()->address}}</p> 
-                        <a href="{{route('product')}}"class = "btn btn-primary">Product Management</a>
+                        <p><strong>address:</strong> {{Auth::user()->address}}</p>
+                        
+                        <p> 
+                            @if (Auth::user(0)->chackisAdmin(1))
+                            <a href="{{route('product')}}"class = "btn btn-primary">Product Management</a>
+                            @endif
+                       
                         <a href=""class = "btn btn-success">Home</a>
+                    </p>
                 </div>
             </div>
         </div>

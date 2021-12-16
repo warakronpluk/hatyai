@@ -31,15 +31,19 @@
     <link href="{{url('admin/css/themes/all-themes.css')}}" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container-fluid"style="background-color: #FF5722 ;">
+
+    <div class="theme-red">
+        <nav class="navbar">
+        <div class="container-fluid">
             <div class="navbar-header">
-                <a href = "{{route('home')}}" class="navbar-brand text-black" >Hat Yai Style Fried Chicken Shop Website</a>
+                <a href = "{{route('home')}}" class="navbar-brand" style="color: white" >Hat Yai Style Fried Chicken Shop Website</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
             </div>
         </div>
     </nav>
+    </div>
+
   <section>
     <!-- Left Sidebar -->
     <aside id="leftsidebar" class="sidebar">
@@ -49,18 +53,21 @@
                 <img src="{{asset('admin/images/admin rit.jpg')}}" width="45" height="52" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Chavapol Tosuk</div>
-                <div class="email">admin1234@example.com</div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}}</div>
+                <div class="email">{{Auth::user()->email}}</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                        <li><a href="{{route('home')}}"><i class="material-icons">person</i>Profile</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                        <li><a href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                            <i class="material-icons">input</i>{{ __('Logout') }}</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -99,19 +106,6 @@
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
                         <i class="material-icons">view_list</i>
-                        <span>หน้า admin</span>
-                    </a>
-                    <ul class="ml-menu">
-                        <li>
-                            <a href="{{route('admin')}}">หน้า admin</a>
-                        </li>
-                        
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="material-icons">view_list</i>
                         <span>หน้า homepage</span>
                     </a>
                     <ul class="ml-menu">
@@ -120,11 +114,6 @@
                         </li>
                         
                     </ul>
-
-                <a href="javascript:void(0);" class="">
-                        <i class="material-icons">subdirectory_arrow_left</i>
-                        <span>ออกจากระบบ</span>
-                    </a>
                
                     
         </div>

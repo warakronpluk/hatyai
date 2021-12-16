@@ -60,44 +60,54 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                        <a href="../../pages/forms/form_homepage_add.php" class="btn btn-success"style="position:relative; right: -1045px; bottom:-25px;">เพิ่มข้อมูล</a>
+                        <a href="{{url('admin/homepage/create')}}" class="btn btn-success"style="position:relative; right: -1045px; bottom:-25px;">เพิ่มข้อมูล</a>
                             <h2>
                                 ตาราง homepage
                                 <small>ตาราง homepage ของเว็บไซต์ไก่ทอดสูตรหาดใหญ่</small>
                             </h2>
+
+                            @if($massage = Session::get('success'))
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                {{$massage}}
+                            </div>
+                        @endif
                         </div>
+                        
                         <div class="body table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>รหัสรูปภาพ</th>
+                                        <th>ID</th>
                                         <th>เนื้อหา homepage</th>
                                         <th>รูปภาพ</th>
                                         <th>เเก้ไขข้อมูล</th>
                                         <th>ลบข้อมูล</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <th>Welcome to
-                                            Hat Yai Fried Chicken Shop
-                                            Best Chicken in the Nonthaburi</th>
-                                        <th><img src="../../images/chicken bg1.jpg"></th>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <a href="../../pages/forms/form_homepage_edit.php" class="btn btn-success">แก้ไขข้อมูล</a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <a href="" class="btn btn-danger">ลบข้อมูล</a>
-                                            </div>
-                                        </td>
+                                @foreach ($data as $homepage)
 
-                                    </tr>
-
-                                </tbody>
+                                <tr> 
+                                <td>{{$homepage->id}}</td>
+                                   <td>{{$homepage->header}}</td>
+                                   <th><img src="{{asset('/admin/images/'.$homepage->image)}}" style="height: 100px"></th>
+                                   <td>
+                                   <div class="d-flex align-items-center">
+                                    <form action='{{url('admin/homepage/index','$homepage->id')}}' method="POST">
+                                       @csrf
+                                    <a href="{{url('/admin/hompage/edit/'.$homepage->id)}}" class="btn btn-success">แก้ไขข้อมูล</a>  
+                                    </div>
+                                   </td>
+                                   <td>
+                                   <div class="d-flex align-items-center">
+                                       <a href="{{url('/admin/homepage/delete/'.$homepage->id)}}" class="btn btn-danger">ลบข้อมูล</a>  
+                                       
+                                           </div>
+                                       </form>
+                                   </td>
+                               </tr>
+                                @endforeach
+                                
                             </table>
                         </div>
                     </div>

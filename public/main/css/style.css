@@ -909,12 +909,13 @@ section {
   display: flex;
   justify-content: space-between;
   position: relative;
+  margin-top: 60px;
 }
 
 .menu .menu-content::after {
-  content: "......................................................................"
- "...................................................................."
- "....................................................................";
+  content: ""
+ ""
+ "";
   position: absolute;
   left: 20px;
   right: 0;
@@ -932,6 +933,7 @@ section {
   font-weight: 700;
   color: white;
   transition: 0.3s;
+  margin-left: 50px;
 }
 
 .menu .menu-content a:hover {
