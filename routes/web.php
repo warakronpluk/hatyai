@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/admin/index','AdminController@index')->name('index');
 Route::get('/about','HomeController@about');
 Auth::routes();
-
 Route::get('/','IndexController@index');
 
 

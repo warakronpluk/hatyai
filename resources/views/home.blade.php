@@ -26,7 +26,7 @@
                             <a href="{{route('product')}}"class = "btn btn-primary">Product Management</a>
                             @endif
                        
-                        <a href=""class = "btn btn-success">Home</a>
+                        <a href="/"class = "btn btn-success">Home</a>
                     </p>
                 </div>
             </div>
